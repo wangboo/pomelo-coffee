@@ -1,6 +1,7 @@
 var pomelo = require('pomelo');
 var mongoose = require('mongoose');
 var fs = require('fs')
+var next_addon_filter = require('./app/filter/next_addon_filter')
 
 /**
 * Init app for client.
@@ -19,6 +20,8 @@ app.configure('production|development', 'connector', function(){
     });
 });
 
+// 为next增加next.suc方法和next.fail方法
+app.before(next_addon_filter);
 // start app
 app.start();
 

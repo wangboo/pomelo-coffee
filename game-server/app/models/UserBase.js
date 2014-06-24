@@ -10,8 +10,14 @@ module.exports = function(app, mongoose, Schema) {
       }
     },
     password: String,
-    created_at: String
+    created_at: String,
+    is_online: Boolean
   });
+  UserBaseSchema.methods.set_online = function(cb) {
+    return this.update({
+      online: true
+    }, cb);
+  };
   UserBase = mongoose.model('UserBase', UserBaseSchema);
   return app.models.UserBase = UserBase;
 };

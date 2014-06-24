@@ -15,10 +15,11 @@ mongoose.connection.on('error', function(err){
 })
 
 var UserBase = mongoose.model('UserBase')
-UserBase.create({username: 'wangbo', password: '0000'}, function(err, user) {
-    if(err) {
-        console.log(err)
-    } else {
-        console.log(user)
-    }
-})
+// UserBase.create({username: 'wangbo', password: '0000'}, function(err, user) {
+//     if(err) {
+//         console.log(err)
+//     } else {
+//         console.log(user)
+//     }
+// })
+

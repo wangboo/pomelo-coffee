@@ -1,4 +1,5 @@
 log = require('pomelo-logger').getLogger('entryHandler')
+sync = require 'sync'
 
 module.exports = (app) ->
   new Handler(app)
@@ -8,7 +9,29 @@ class Handler
 
   # 登陆
   entry: (msg, session, next) ->
-    next(null, {code: 200, msg: 'game server is ok'})
+    sync.waterFall([
+      (cb) ->
+        UserBase.findOne({username: msg.username}, (err, user) ->
+          if err
+            next.server_err()
+          else if users == null
+            cb "账号不存在"
+          else if user.password == msg.password
+            cb null, user
+          else
+            cb "账号密码错误"
+        )
+      ,
+      (user, cb) ->
+        user.set_online cb
+      ], 
+      (err) -> 
+        if err
+          next.fail err
+        else
+          next.suc
+    )
+    
 
   # 注册
   regist: (msg, session, next) ->
@@ -16,14 +39,10 @@ class Handler
     UserBase = @app.models.UserBase
     UserBase.create({username: msg.username, password: msg.password}, (err, users) ->
       rst = if err
-        if err.code == 11000
-          {_r: "用户名已经存在"}
-        else
-          {_r: "err"}
+        next.fail('用户名已经存在')
       else
-        {_r: 's'}
-      next(null, rst)
+        next.suc()
     )
-    UserBase.count({username: msg.username}, (err, count) ->
-      if err or count > 0 then next(null, {_r: "用户名存在"})
-    )
+
+
+

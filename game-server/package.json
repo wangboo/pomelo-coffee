@@ -3,7 +3,9 @@
     "version":"0.0.1",
     "private":false,
     "dependencies":{
-        "pomelo":"1.0.0-pre"
+        "pomelo":"1.0.0-pre",
+        "sync":"0.2.2",
+        "mongoose-auto-increment": "3.0.4"
     }
 }
 
