@@ -8,10 +8,10 @@ module.exports = (app, mongoose, Schema) ->
     })
 
   UserBaseSchema.methods.set_online = (cb) ->
-  	this.update({online: true}, cb)
+  	@update({online: true}, cb)
 
 
 
-  UserBase = mongoose.model('UserBase', UserBaseSchema)
+  UserBase = mongoose.model('user_base', UserBaseSchema)
   app.models.UserBase = UserBase
 

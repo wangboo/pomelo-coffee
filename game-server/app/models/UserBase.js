@@ -18,6 +18,6 @@ module.exports = function(app, mongoose, Schema) {
       online: true
     }, cb);
   };
-  UserBase = mongoose.model('UserBase', UserBaseSchema);
+  UserBase = mongoose.model('user_base', UserBaseSchema);
   return app.models.UserBase = UserBase;
 };
